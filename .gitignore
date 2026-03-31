@@ -1,0 +1,10 @@
+venv/
+.env
+.codex
+*.log
+odoo.conf
+odoo18/
+
+# Python cache
+__pycache__/
+*.pyc

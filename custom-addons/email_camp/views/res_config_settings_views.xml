@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_email_camp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.email_camp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Email Camp" string="Email Camp" name="email_camp_settings" logo="/mail/static/description/icon.png">
+                    <block title="Email Camp" name="email_camp_block">
+                        <!-- Single row with real fields so Odoo always renders this app; SMTP is the button (same as core Discuss/Marketing). -->
+                        <setting string="Email sending and tracking" help="SMTP host, port, encryption, username, password, and FROM filtering are stored in Outgoing Mail Servers (not here). Email Camp uses the active server with the lowest Sequence number first.">
+                            <div class="content-group">
+                                <button type="action" name="base.action_ir_mail_server_list"
+                                        string="Outgoing Mail Servers" class="btn-link" icon="oi-arrow-right"/>
+                            </div>
+                            <div class="mt16">
+                                <div class="text-muted small mb-2">Public base URL — if empty, web.base.url is used for tracking links.</div>
+                                <field name="email_camp_base_url" placeholder="https://your-server.example.com"/>
+                            </div>
+                            <div class="mt16">
+                                <div class="text-muted small mb-2">IMAP host for reply sync — same login/password as outgoing server.</div>
+                                <field name="email_camp_imap_server"/>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

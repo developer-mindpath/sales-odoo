@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_email_camp_contact_user,email_camp.contact.user,model_email_camp_contact,email_camp.group_email_camp_user,1,1,1,1
+access_email_camp_campaign_user,email_camp.campaign.user,model_email_camp_campaign,email_camp.group_email_camp_user,1,1,1,1
+access_email_camp_history_user,email_camp.history.user,model_email_camp_history,email_camp.group_email_camp_user,1,1,1,1
+access_email_camp_contact_import_wizard,email_camp.contact.import.wizard,model_email_camp_contact_import_wizard,email_camp.group_email_camp_user,1,1,1,1
+access_email_camp_sync_inbox_replies_wizard,email_camp.sync.inbox.replies.wizard,model_email_camp_sync_inbox_replies_wizard,email_camp.group_email_camp_user,1,1,1,1

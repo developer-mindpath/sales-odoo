@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_email_camp_contact_tree" model="ir.ui.view">
+        <field name="name">email_camp.contact.tree</field>
+        <field name="model">email_camp.contact</field>
+        <field name="arch" type="xml">
+            <list string="Contacts">
+                <field name="email"/>
+                <field name="firstname"/>
+                <field name="lastname"/>
+                <field name="phone"/>
+                <field name="country"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_email_camp_contact_form" model="ir.ui.view">
+        <field name="name">email_camp.contact.form</field>
+        <field name="model">email_camp.contact</field>
+        <field name="arch" type="xml">
+            <form string="Contact">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="firstname" placeholder="First name" class="oe_inline"/>
+                            <field name="lastname" placeholder="Last name" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="email"/>
+                    </group>
+                    <group>
+                        <field name="phone"/>
+                        <field name="country"/>
+                        <field name="address"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_email_camp_contact" model="ir.actions.act_window">
+        <field name="name">Contacts</field>
+        <field name="res_model">email_camp.contact</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create an Email Camp contact</p>
+            <p>
+                Click <b>Create</b> (top left) to add one contact at a time.<br/>
+                Use menu <b>Contacts → Import CSV</b> to upload many rows at once.
+            </p>
+        </field>
+    </record>
+</odoo>

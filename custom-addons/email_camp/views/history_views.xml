@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_email_camp_history_search" model="ir.ui.view">
+        <field name="name">email_camp.history.search</field>
+        <field name="model">email_camp.history</field>
+        <field name="arch" type="xml">
+            <search string="Email history">
+                <field name="campaign_id"/>
+                <field name="contact_email"/>
+                <field name="status"/>
+                <filter name="sent" string="Sent" domain="[('status', '=', 'sent')]"/>
+                <filter name="failed" string="Failed" domain="[('status', '=', 'failed')]"/>
+                <filter name="opened" string="Opened" domain="[('status', '=', 'opened')]"/>
+                <filter name="replied" string="Replied" domain="[('status', '=', 'replied')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_by_campaign" string="Campaign" context="{'group_by': 'campaign_id'}"/>
+                    <filter name="group_by_direction" string="Direction" context="{'group_by': 'direction'}"/>
+                    <filter name="group_by_day" string="Date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_email_camp_history_tree" model="ir.ui.view">
+        <field name="name">email_camp.history.tree</field>
+        <field name="model">email_camp.history</field>
+        <field name="arch" type="xml">
+            <list string="Email history" create="false" edit="false">
+                <field name="create_date"/>
+                <field name="message_id"/>
+                <field name="campaign_id"/>
+                <field name="contact_email"/>
+                <field name="status"/>
+                <field name="direction"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_email_camp_history_graph" model="ir.ui.view">
+        <field name="name">email_camp.history.graph</field>
+        <field name="model">email_camp.history</field>
+        <field name="arch" type="xml">
+            <graph string="Campaign Breakdown" type="bar">
+                <field name="status"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_email_camp_history_pivot" model="ir.ui.view">
+        <field name="name">email_camp.history.pivot</field>
+        <field name="model">email_camp.history</field>
+        <field name="arch" type="xml">
+            <pivot string="Campaign Breakdown">
+                <field name="status" type="row"/>
+                <field name="direction" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_email_camp_history" model="ir.actions.act_window">
+        <field name="name">Email history</field>
+        <field name="res_model">email_camp.history</field>
+        <field name="view_mode">list,graph,pivot</field>
+        <field name="search_view_id" ref="view_email_camp_history_search"/>
+    </record>
+</odoo>

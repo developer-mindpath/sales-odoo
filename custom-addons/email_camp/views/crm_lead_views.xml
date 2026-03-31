@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_lead_tree_email_camp" model="ir.ui.view">
+        <field name="name">crm.lead.tree.email.camp</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='name']" position="after">
+                <field name="email_camp_campaign_id" optional="show"/>
+                <field name="email_camp_contact_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_form_email_camp" model="ir.ui.view">
+        <field name="name">crm.lead.form.email.camp</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Email Camp" invisible="not email_camp_campaign_id">
+                    <group>
+                        <field name="email_camp_campaign_id" readonly="1"/>
+                        <field name="email_camp_contact_id" readonly="1"/>
+                    </group>
+                    <group string="Message Thread">
+                        <field name="email_camp_original_message_id" readonly="1"/>
+                        <field name="email_camp_reply_message_id" readonly="1"/>
+                    </group>
+                    <group string="Latest Reply">
+                        <field name="email_camp_reply_subject" readonly="1"/>
+                        <field name="email_camp_reply_body" readonly="1" nolabel="1" widget="text"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_email_camp_crm_lead" model="ir.actions.act_window">
+        <field name="name">Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,list,form,graph,pivot,calendar,activity</field>
+        <field name="domain">[('email_camp_campaign_id', '!=', False)]</field>
+        <field name="context">{'default_type': 'lead'}</field>
+    </record>
+</odoo>

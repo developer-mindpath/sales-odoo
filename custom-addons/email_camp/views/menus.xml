@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_email_camp_root" name="Email Camp" sequence="55"
+              web_icon="mail,static/description/icon.png"
+              groups="email_camp.group_email_camp_user"/>
+    <menuitem id="menu_email_camp_campaigns" name="Campaigns" parent="menu_email_camp_root"
+              action="action_email_camp_campaign" sequence="10"/>
+    <!-- Folder only: if a menu has child items, its own action is often not shown in Odoo. -->
+    <menuitem id="menu_email_camp_contacts_folder" name="Contacts" parent="menu_email_camp_root" sequence="20"/>
+    <menuitem id="menu_email_camp_contacts" name="All contacts" parent="menu_email_camp_contacts_folder"
+              action="action_email_camp_contact" sequence="10"/>
+    <menuitem id="menu_email_camp_import_csv" name="Import CSV" parent="menu_email_camp_contacts_folder"
+              action="action_email_camp_contact_import_wizard" sequence="20"/>
+    <menuitem id="menu_email_camp_leads" name="Leads" parent="menu_email_camp_root"
+              action="action_email_camp_crm_lead" sequence="30"/>
+    <menuitem id="menu_email_camp_analytics" name="Analytics" parent="menu_email_camp_root"
+              action="action_email_camp_campaign_analytics" sequence="40"/>
+    <menuitem id="menu_email_camp_history" name="Email history" parent="menu_email_camp_root"
+              action="action_email_camp_history" sequence="50"/>
+    <menuitem id="menu_email_camp_sync" name="Sync inbox replies" parent="menu_email_camp_root"
+              action="action_email_camp_sync_wizard" sequence="60"/>
+    <menuitem id="menu_email_camp_mail_servers" name="Outgoing Mail Servers" parent="menu_email_camp_root"
+              action="base.action_ir_mail_server_list" sequence="90" groups="base.group_system"/>
+</odoo>

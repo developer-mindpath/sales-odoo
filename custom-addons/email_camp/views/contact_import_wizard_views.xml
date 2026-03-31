@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_email_camp_contact_import_wizard_form" model="ir.ui.view">
+        <field name="name">email_camp.contact.import.wizard.form</field>
+        <field name="model">email_camp.contact.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import contacts">
+                <group>
+                    <field name="data_file" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+                </group>
+                <p class="text-muted">
+                    CSV columns: email, firstname (or first_name), lastname (or last_name), country, address, phone.
+                </p>
+                <footer>
+                    <button name="action_import" string="Import" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_email_camp_contact_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import contacts (CSV)</field>
+        <field name="res_model">email_camp.contact.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

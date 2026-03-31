@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_email_camp_lead_tree" model="ir.ui.view">
+        <field name="name">email_camp.lead.tree</field>
+        <field name="model">email_camp.lead</field>
+        <field name="arch" type="xml">
+            <tree string="Leads" editable="bottom">
+                <field name="contact_email"/>
+                <field name="campaign_id"/>
+                <field name="status"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_email_camp_lead_form" model="ir.ui.view">
+        <field name="name">email_camp.lead.form</field>
+        <field name="model">email_camp.lead</field>
+        <field name="arch" type="xml">
+            <form string="Lead">
+                <sheet>
+                    <group>
+                        <field name="contact_email"/>
+                        <field name="campaign_id"/>
+                        <field name="contact_id"/>
+                        <field name="status"/>
+                    </group>
+                    <group string="Thread">
+                        <field name="original_message_id"/>
+                        <field name="reply_message_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_email_camp_lead" model="ir.actions.act_window">
+        <field name="name">Leads</field>
+        <field name="res_model">email_camp.lead</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

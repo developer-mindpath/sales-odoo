@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_email_camp_campaign_tree" model="ir.ui.view">
+        <field name="name">email_camp.campaign.tree</field>
+        <field name="model">email_camp.campaign</field>
+        <field name="arch" type="xml">
+            <list string="Campaigns" multi_edit="1">
+                <header>
+                    <button name="action_run_campaign" type="object" string="Send campaign"
+                            class="btn-primary ms-1" display="always"
+                            confirm="Send emails to all contacts on the selected draft campaign(s)?"/>
+                </header>
+                <field name="name"/>
+                <field name="status"/>
+                <field name="total_sent" optional="show"/>
+                <field name="total_failed" optional="show"/>
+                <field name="total_replies" optional="show"/>
+                <field name="total_seen" optional="show"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_email_camp_campaign_analytics_tree" model="ir.ui.view">
+        <field name="name">email_camp.campaign.analytics.tree</field>
+        <field name="model">email_camp.campaign</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <list string="Campaign Analytics" create="false" edit="false" delete="false">
+                <field name="name"/>
+                <field name="total_sent"/>
+                <field name="total_failed"/>
+                <field name="total_replies"/>
+                <field name="total_seen"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_email_camp_campaign_analytics_form_full" model="ir.ui.view">
+        <field name="name">email_camp.campaign.analytics.form.full</field>
+        <field name="model">email_camp.campaign</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Analytics" class="o_form_nosheet" create="false" edit="false" delete="false">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,active"/>
+                    <button name="action_view_analytics_breakdown" type="object" string="Open charts &amp; pivots" class="btn-primary"/>
+                    <button name="action_view_history" type="object" string="Open full event log" class="btn-secondary"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="create_date" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="total_contacts" readonly="1"/>
+                        <field name="total_events" readonly="1"/>
+                    </group>
+                </group>
+                <group col="4">
+                    <field name="total_sent" readonly="1"/>
+                    <field name="total_failed" readonly="1"/>
+                    <field name="total_replies" readonly="1"/>
+                    <field name="total_seen" readonly="1"/>
+                </group>
+                <group col="3">
+                    <field name="open_rate" widget="progressbar" readonly="1"/>
+                    <field name="reply_rate" widget="progressbar" readonly="1"/>
+                    <field name="failure_rate" widget="progressbar" readonly="1"/>
+                </group>
+                <separator string="Campaign Event Log"/>
+                <field name="history_ids" readonly="1" nolabel="1" context="{'default_campaign_id': id}">
+                    <list create="false" edit="false" delete="false">
+                        <field name="create_date"/>
+                        <field name="contact_email"/>
+                        <field name="status"/>
+                        <field name="direction"/>
+                        <field name="message_id"/>
+                    </list>
+                </field>
+            </form>
+        </field>
+    </record>
+    <record id="view_email_camp_campaign_form" model="ir.ui.view">
+        <field name="name">email_camp.campaign.form</field>
+        <field name="model">email_camp.campaign</field>
+        <field name="arch" type="xml">
+            <form string="Campaign">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,active"/>
+                    <button name="action_run_campaign" type="object" string="Send campaign" class="btn-primary"/>
+                    <button name="action_sync_inbox_replies" type="object" string="Sync inbox replies" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sent_history" type="object" class="oe_stat_button" icon="fa-paper-plane">
+                            <field name="total_sent" string="Sent" widget="statinfo"/>
+                        </button>
+                        <button name="action_view_failed_history" type="object" class="oe_stat_button" icon="fa-times-circle">
+                            <field name="total_failed" string="Failed" widget="statinfo"/>
+                        </button>
+                        <button name="action_view_reply_history" type="object" class="oe_stat_button" icon="fa-reply">
+                            <field name="total_replies" string="Replies" widget="statinfo"/>
+                        </button>
+                        <button name="action_view_seen_history" type="object" class="oe_stat_button" icon="fa-eye">
+                            <field name="total_seen" string="Seen" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Analytics" name="analytics">
+                            <group col="4">
+                                <field name="total_contacts" readonly="1"/>
+                                <field name="total_sent" readonly="1"/>
+                                <field name="total_failed" readonly="1"/>
+                                <field name="total_events" readonly="1"/>
+                            </group>
+                            <group col="3">
+                                <field name="open_rate" widget="progressbar" readonly="1"/>
+                                <field name="reply_rate" widget="progressbar" readonly="1"/>
+                                <field name="failure_rate" widget="progressbar" readonly="1"/>
+                            </group>
+                            <group>
+                                <button name="action_view_analytics_breakdown" type="object" string="Open charts &amp; pivots" class="btn-secondary"/>
+                                <button name="action_view_history" type="object" string="Open full event log" class="btn-secondary"/>
+                            </group>
+                            <field name="history_ids" readonly="1" nolabel="1" context="{'default_campaign_id': id}">
+                                <list create="false" edit="false" delete="false">
+                                    <field name="create_date"/>
+                                    <field name="contact_email"/>
+                                    <field name="status"/>
+                                    <field name="direction"/>
+                                    <field name="message_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Body" name="body">
+                            <field name="body" widget="html" options="{'style-inline': true}" nolabel="1"/>
+                            <p class="text-muted">
+                                Dynamic fields: use curly braces around one word, e.g. firstname, lastname,
+                                email, country, address, phone, or first_name / last_name. Unknown words are left as-is.
+                            </p>
+                        </page>
+                        <page string="Contacts" name="contacts">
+                            <p class="text-muted mb-2">
+                                Use <b>Add a line</b> to pick existing contacts. Add new people under
+                                <b>Email Camp → Contacts → All contacts</b> (or open Search and create from there if your list is empty).
+                            </p>
+                            <field name="contact_ids" nolabel="1">
+                                <list>
+                                    <field name="email"/>
+                                    <field name="firstname"/>
+                                    <field name="lastname"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Attachments" name="attachments" invisible="status != 'draft'">
+                            <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_email_camp_campaign" model="ir.actions.act_window">
+        <field name="name">Campaigns</field>
+        <field name="res_model">email_camp.campaign</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a campaign</p>
+            <p>
+                Open a campaign to use <b>Send campaign</b> in the form header, or stay on this list,
+                select row(s), open the <b>Actions</b> menu (gear) and choose <b>Send campaign</b>.
+            </p>
+        </field>
+    </record>
+    <record id="action_email_camp_campaign_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_email_camp_campaign_tree"/>
+        <field name="act_window_id" ref="action_email_camp_campaign"/>
+    </record>
+    <record id="action_email_camp_campaign_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_email_camp_campaign_form"/>
+        <field name="act_window_id" ref="action_email_camp_campaign"/>
+    </record>
+    <record id="view_email_camp_campaign_search" model="ir.ui.view">
+        <field name="name">email_camp.campaign.search</field>
+        <field name="model">email_camp.campaign</field>
+        <field name="arch" type="xml">
+            <search string="Campaign Analytics">
+                <field name="name"/>
+                <filter name="draft" string="Draft" domain="[('status', '=', 'draft')]"/>
+                <filter name="active" string="Active" domain="[('status', '=', 'active')]"/>
+                <separator/>
+                <filter name="sent_gt_zero" string="Has Sends" domain="[('total_sent', '&gt;', 0)]"/>
+                <filter name="reply_gt_zero" string="Has Replies" domain="[('total_replies', '&gt;', 0)]"/>
+                <filter name="seen_gt_zero" string="Has Opens" domain="[('total_seen', '&gt;', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_date" string="Created Date" context="{'group_by': 'create_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_email_camp_campaign_analytics" model="ir.actions.act_window">
+        <field name="name">Analytics</field>
+        <field name="res_model">email_camp.campaign</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_email_camp_campaign_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Campaign analytics will appear here</p>
+            <p>
+                Each row summarizes one campaign: sent, failed, replies, opens, and date.
+                Open a campaign to see detailed analytics, charts, and the event log.
+            </p>
+        </field>
+    </record>
+    <record id="action_email_camp_campaign_analytics_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_email_camp_campaign_analytics_tree"/>
+        <field name="act_window_id" ref="action_email_camp_campaign_analytics"/>
+    </record>
+    <record id="action_email_camp_campaign_analytics_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_email_camp_campaign_analytics_form_full"/>
+        <field name="act_window_id" ref="action_email_camp_campaign_analytics"/>
+    </record>
+</odoo>
